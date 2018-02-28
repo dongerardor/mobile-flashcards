@@ -13,7 +13,7 @@ export default class DeckCardNew extends React.Component {
 
   addCard = () => {
     const { navigate } = this.props.navigation;
-    navigate('Deck');
+    navigate('DeckStart');
   }
 
   render() {

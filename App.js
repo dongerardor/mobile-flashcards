@@ -1,30 +1,43 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import DecksList from './components/DecksList';
-import Deck from './components/Deck';
-import DeckNew from './components/DeckNew';
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import DecksList from './components/DecksList'; 
+import DeckStart from './components/DeckStart'; 
+import DeckNew from './components/DeckNew'; 
+import DeckCardFinal from './components/DeckCardFinal'; 
+import DeckCardNew from './components/DeckCardNew'; 
+import DeckCardQuestion from './components/DeckCardQuestion'; 
+import DeckCardAnswer from './components/DeckCardAnswer'; 
 import { wine, gray, white, yellow } from './utils/colors';
 import { StackNavigator } from 'react-navigation';
 
 const MainNavigator = StackNavigator({
-  Home: {
+  DecksList : {
     screen: DecksList,
   },
-  Deck: {
-    screen: Deck,
+  DeckStart : {
+    screen: DeckStart,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
         backgroundColor: yellow,
       }
-    }
+    }    
   },
-  DeckNew: {
+  DeckNew : {
     screen: DeckNew,
   },
-  DeckCardNew: {
+  DeckCardFinal : {
+    screen: DeckCardFinal,
+  },
+  DeckCardNew : {
     screen: DeckCardNew,
-  }
+  },
+  DeckCardQuestion : {
+    screen: DeckCardQuestion,
+  },
+  DeckCardAnswer : {
+    screen: DeckCardAnswer,
+  },
 })
 
 export default class App extends React.Component {

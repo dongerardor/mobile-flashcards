@@ -4,14 +4,17 @@ import { wine, gray, white, yellow } from '../utils/colors'
 import { FontAwesome } from '@expo/vector-icons'
 import TextButton from './TextButton';
 
-export default class Deck extends React.Component {
+export default class DeckCardFinal extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {deckTitle: ''};
   }
 
-  addDeck = () => {
+  startAgain = () => {
+    const { navigate } = this.props.navigation;
+    navigate('DeckStart');
+  }
+
+  seeAllDecks = () => {
     const { navigate } = this.props.navigation;
     navigate('DecksList');
   }
@@ -19,18 +22,16 @@ export default class Deck extends React.Component {
   render() {
     return (
       <View>
-        <Text style={styles.title}>
-          New deck title:
+        <Text style={styles.text}>
+          You’ve answered XX% (9 out of10) correctly.
         </Text>
 
-        <TextInput
-          style={ styles.textInput }
-          onChangeText={(deckTitle) => this.setState({deckTitle})}
-          value={this.state.deckTitle}
-        />
+        <TextButton onPress={this.startAgain}>
+          START DECK AGAIN
+        </TextButton>
 
-        <TextButton onPress={this.addDeck}>
-            ADD DECK
+        <TextButton onPress={this.seeAllDecks}>
+          SEE ALL DECKS
         </TextButton>
       </View>
     );

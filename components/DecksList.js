@@ -13,7 +13,7 @@ export default class DecksList extends React.Component {
 
   goToDeck = () => {
     const { navigate } = this.props.navigation;
-    navigate('Deck');
+    navigate('DeckStart');
   }
 
   addDeck = () => {
