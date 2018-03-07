@@ -5,10 +5,13 @@ import { FontAwesome } from '@expo/vector-icons';
 import TextButton from './TextButton';
 import DeckListItem from './DeckListItem';
 
+
+
+
 export default class DecksList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { status: 0 }
+    this.state = { decks: ["deck1"] }
   }
 
   goToDeck = () => {
@@ -25,6 +28,17 @@ export default class DecksList extends React.Component {
     title: 'Welcome',
   };
 
+
+
+
+
+
+
+
+
+
+
+
   render() {
     return (
       <ScrollView>
@@ -33,6 +47,8 @@ export default class DecksList extends React.Component {
             GO TO DECK
         </TextButton>
 
+        <Text>this.state.decks</Text>
+        
         <DeckListItem/>
         <DeckListItem/>
         <TextButton onPress={this.addDeck}>
@@ -42,3 +58,4 @@ export default class DecksList extends React.Component {
     );
   }
 }
+
