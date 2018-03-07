@@ -1,6 +1,4 @@
-import {
-  FETCH_DECK
-} from '../actions/types';
+import { FETCH_DECK } from '../actions';
 
 export default ( state = {}, action ) => {
   switch (action.type) {

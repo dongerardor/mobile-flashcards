@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import { Constants } from 'expo';
@@ -18,14 +18,15 @@ import reducer from './reducers'
 
 import { wine, gray, white, yellow } from './utils/colors';
 
-//////////////////////
-import { fetchDecks } from './utils/api';
-import { receiveDecks } from './actions';
-import { RECEIVE_DECKS } from './actions'
-
 const MainNavigator = StackNavigator({
   DecksList : {
     screen: DecksList,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: yellow,
+      }
+    }    
   },
   DeckStart : {
     screen: DeckStart,
@@ -38,41 +39,62 @@ const MainNavigator = StackNavigator({
   },
   DeckNew : {
     screen: DeckNew,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: yellow,
+      }
+    }    
   },
   DeckCardFinal : {
     screen: DeckCardFinal,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: yellow,
+      }
+    }    
   },
   DeckCardNew : {
     screen: DeckCardNew,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: yellow,
+      }
+    } 
   },
   DeckCardQuestion : {
     screen: DeckCardQuestion,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: yellow,
+      }
+    }    
   },
   DeckCardAnswer : {
     screen: DeckCardAnswer,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: yellow,
+      }
+    }    
   },
 })
 
+
 export default class App extends React.Component {
-
-
-  /////////////////////////////////////////
-  /////////////////////////////////////////
-  /////////////////////////////////////////
-
-  componentDidMount () {
-    fetchDecks();
-   /* fetchDecks()
-      .then((decks) => dispatch(receiveDecks(decks)))
-      .then((decks) => this.setState({ decks }));*/
-  }
-
-
+  
   render() {
+    const store = createStore(reducer, {}, applyMiddleware(ReduxThunk));
     return (
-      <View style={styles.container}>
-        <MainNavigator/>
-      </View>
+      <Provider store={ store }>
+        <View style={styles.container}>
+          <MainNavigator />
+        </View>
+      </Provider>
     );
   }
 }
