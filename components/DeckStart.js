@@ -4,12 +4,20 @@ import { wine, gray, white, yellow } from '../utils/colors'
 import { FontAwesome } from '@expo/vector-icons'
 import DeckCardNew from './DeckCardNew';
 import TextButton from './TextButton';
-
+import { getDeckDetails } from '../actions';
 
 export default class DeckStart extends React.Component {
   constructor(props) {
     super(props)
     this.state = { status: 0 }
+  }
+
+  componentDidMount() {
+    //this.props.DeckStart(this.props.navigation.state.params.deckId);
+  }
+
+  componentDidUpdate() {
+    //this.props.DeckStart(this.props.navigation.state.params.deckId);
   }
 
   start = () => {

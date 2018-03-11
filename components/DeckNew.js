@@ -3,22 +3,41 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 
 import { wine, gray, white, yellow } from '../utils/colors'
 import { FontAwesome } from '@expo/vector-icons'
 import TextButton from './TextButton';
+import { saveDeck } from '../utils/api';
+import { fetchDeckDB } from '../actions';
 
 export default class Deck extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {deckTitle: ''};
+    this.state = {deckTitle: '', errorMessage: false};
   }
 
   addDeck = () => {
-    const { navigate } = this.props.navigation;
-    navigate('DecksList');
+    const deckTitle = this.state.deckTitle;
+    if (deckTitle) {
+      saveDeck(deckTitle);
+      this.setState({
+        errorMessage: false,
+        deckTitle: ''
+      });
+
+      this.props.navigation.navigate(
+        'DeckStart',
+        {
+          navTitle: deckTitle,
+          deckId: deckTitle,
+        }
+      );
+    } else {
+      this.setState({ errorMessage: true })
+    }
   }
+  //this.props.navigation.navigate('DecksList');
 
   render() {
     return (
       <View>
+
         <Text style={styles.title}>
           New deck title:
         </Text>
@@ -29,7 +48,13 @@ export default class Deck extends React.Component {
           value={this.state.deckTitle}
         />
 
-        <TextButton onPress={this.addDeck}>
+        <Text
+          style={ styles.text }
+        >
+          { this.state.errorMessage ? 'Title is required' : '' }
+        </Text>
+
+        <TextButton onPress={ this.addDeck }>
             ADD DECK
         </TextButton>
       </View>

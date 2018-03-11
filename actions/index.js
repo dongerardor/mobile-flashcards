@@ -5,10 +5,11 @@ import { AsyncStorage } from 'react-native';
 import { getDecks, getDeck } from '../utils/api';
 
 export function fetchAllDecks() {
-  return (dispatch) => {
+  console.log('fetchAllDecks');
+  /*return (dispatch) => {
     getDecks()
     .then(data => dispatch({ type: FETCH_ALL_DECKS, payload: data }));
-  }
+  }*/
 }
 
 export function getDeckDetails(deckID) {

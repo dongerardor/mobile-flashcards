@@ -8,6 +8,20 @@ import { getDecks, getDeck } from '../utils/api';
 
 const DECKS_STORAGE_KEY = 'UdaciFlashcards:decks'
 
+export function saveDeck(deckTitle) {
+  try {
+    
+    console.log('saveDeck: ', deckTitle);
+
+    return AsyncStorage.setItem(deckTitle, JSON.stringify({ deckTitle, questions: [] }));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+/*
 export function fetchDecks () {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then((value) => {
@@ -18,6 +32,45 @@ export function fetchDecks () {
     }
   })
 }
+*/
+
+export function getAllDecks() {
+  
+  console.log(getAllDecks);
+
+  return AsyncStorage.getAllKeys().then(keys => {
+    return AsyncStorage.multiGet(keys).then(stores => {
+      return stores.map((result, i, store) => {
+        // get at each store's key/value so you can work with it
+        let key = store[i][0];
+        let value = JSON.parse(store[i][1]);
+        if (value) {
+          return {
+            key,
+            title: value.title,
+            questions: value.questions
+          };
+        }
+      }).filter(items => {
+        if (items) {
+          return typeof items.questions !== 'undefined'
+        }
+      });
+    });
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 export function submitEntry ({ entry, key }) {
   return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({

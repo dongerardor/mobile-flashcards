@@ -1,17 +1,44 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { wine, gray, white, yellow } from '../utils/colors';
 import { FontAwesome } from '@expo/vector-icons';
 import TextButton from './TextButton';
 import DeckListItem from './DeckListItem';
+import { fetchAllDecks } from '../actions';
 
-
-
-
-export default class DecksList extends React.Component {
+class DecksList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { decks: ["deck1"] }
+    this.state = { decks: [] }
+  }
+
+  componentDidMount() {
+    this.props.fetchAllDecks();
+  }
+
+
+
+ /* componentDidMount () {
+    
+
+    fetchCalendarResults()
+      .then((entries) => dispatch(receiveEntries(entries)))
+      .then(({ entries }) => {
+        if (!entries[timeToString()]) {
+          dispatch(addEntry({
+            [timeToString()]: getDailyReminderValue()
+          }))
+        }
+      })
+      .then(() => this.setState(() => ({ready: true})))
+  }*/
+
+
+
+
+  componentDidUpdate() {
+    //this.props.fetchAllDecks()
   }
 
   goToDeck = () => {
@@ -27,17 +54,6 @@ export default class DecksList extends React.Component {
   static navigationOptions = {
     title: 'Welcome',
   };
-
-
-
-
-
-
-
-
-
-
-
 
   render() {
     return (
@@ -59,3 +75,12 @@ export default class DecksList extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  const DBdata = state.decks;
+
+  return { DBdata };
+};
+
+const mapDispatchToProps = { fetchAllDecks };
+
+export default connect(mapStateToProps, mapDispatchToProps)(DecksList);

@@ -13,8 +13,7 @@ import DeckCardFinal from './components/DeckCardFinal';
 import DeckCardNew from './components/DeckCardNew'; 
 import DeckCardQuestion from './components/DeckCardQuestion'; 
 import DeckCardAnswer from './components/DeckCardAnswer'; 
-
-import reducer from './reducers'
+import reducer from './reducers';
 
 import { wine, gray, white, yellow } from './utils/colors';
 
@@ -24,7 +23,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: yellow,
+        backgroundColor: wine,
       }
     }    
   },
@@ -33,7 +32,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: yellow,
+        backgroundColor: wine,
       }
     }    
   },
@@ -42,7 +41,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: yellow,
+        backgroundColor: wine,
       }
     }    
   },
@@ -51,7 +50,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: yellow,
+        backgroundColor: wine,
       }
     }    
   },
@@ -60,7 +59,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: yellow,
+        backgroundColor: wine,
       }
     } 
   },
@@ -69,7 +68,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: yellow,
+        backgroundColor: wine,
       }
     }    
   },
@@ -78,7 +77,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: yellow,
+        backgroundColor: wine,
       }
     }    
   },
