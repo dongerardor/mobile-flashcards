@@ -6,27 +6,26 @@ import { FontAwesome } from '@expo/vector-icons';
 export default class DeckListItem extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { status: 0 }
+    //props.data.deck
+    //props.data.questions
   }
 
-  onPress = () => {
-    this.setState({
-      status: this.state.status++
-    })
-  }
+  goToDeck = () => this.props.goToDeck({
+      entryId: this.props.data.deck,
+      navTitle: this.props.data.deck
+  })
 
   render() {
     return (
       <View style = {styles.deckListItemContainer}>
         <TouchableOpacity
-          onPress={this.onPress}
+          onPress={this.goToDeck.bind(this)}
         >
-          <Text style = {styles.deckListItemTitle}>
-            DDDck List Item Name Lorem ipsum dolor sit consectueter sit amet ipsum dolor sit consectueter sit amet Deck List Item
-          </Text>
-        
           <Text style = {styles.deckListItemCardsQty}>
-            9 cards
+            Cards: { this.props.data.questions.length }
+          </Text>
+          <Text style = {styles.deckListItemTitle}>
+            { this.props.data.deck }
           </Text>
 
         </TouchableOpacity> 

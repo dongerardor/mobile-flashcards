@@ -17,31 +17,14 @@ class DecksList extends React.Component {
     this.props.fetchAllDecks();
   }
 
-
-
- /* componentDidMount () {
-    
-
-    fetchCalendarResults()
-      .then((entries) => dispatch(receiveEntries(entries)))
-      .then(({ entries }) => {
-        if (!entries[timeToString()]) {
-          dispatch(addEntry({
-            [timeToString()]: getDailyReminderValue()
-          }))
-        }
-      })
-      .then(() => this.setState(() => ({ready: true})))
-  }*/
-
-
-
-
-  componentDidUpdate() {
-    //this.props.fetchAllDecks()
+  componentWillReceiveProps(nextProps) {
+    if (this.state.decks !== nextProps.decks) {
+      this.setState({ decks: nextProps.decks });
+    }
   }
 
-  goToDeck = () => {
+  goToDeck = (deck) => {
+    console.log('DecksList goToDeck');
     const { navigate } = this.props.navigation;
     navigate('DeckStart');
   }
@@ -56,17 +39,21 @@ class DecksList extends React.Component {
   };
 
   render() {
+
+    //console.log("render state: ", this.state.decks);
+
+    const displayDecksList = this.state.decks.length === 0 
+      ? (<Text>Press ADD DECK to get started</Text>)
+      : (this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>));
+
     return (
       <ScrollView>
-
         <TextButton onPress={this.goToDeck}>
             GO TO DECK
         </TextButton>
-
-        <Text>this.state.decks</Text>
         
-        <DeckListItem/>
-        <DeckListItem/>
+        { displayDecksList }
+
         <TextButton onPress={this.addDeck}>
             ADD DECK
         </TextButton>
@@ -76,11 +63,52 @@ class DecksList extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const DBdata = state.decks;
+  const decks = state.decks;
 
-  return { DBdata };
+  return { decks };
 };
 
 const mapDispatchToProps = { fetchAllDecks };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecksList);
+
+
+
+
+
+
+/*
+
+        {this.state.decks.length === 0
+          ? <DeckListItem />
+          : <Text>Press ADD DECK to get started</Text>
+        }
+
+
+
+{this.props.decks.length > 0
+          ?
+          this.props.decks.map((deck) => {
+            <DeckListItem data={deck} />
+          }
+          : <Text>Press ADD DECK to get started!"<Text/>
+        }
+
+ componentDidMount () {
+    
+
+    fetchCalendarResults()
+      .then((entries) => dispatch(receiveEntries(entries)))
+      .then(({ entries }) => {
+        if (!entries[timeToString()]) {
+          dispatch(addEntry({
+            [timeToString()]: getDailyReminderValue()
+          }))
+        }
+      })
+      .then(() => this.setState(() => ({ready: true})))
+  }
+
+  componentDidUpdate() {
+    //this.props.fetchAllDecks()
+  }*/

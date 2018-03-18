@@ -1,53 +1,22 @@
 import { AsyncStorage } from 'react-native';
 
-///////////
-///////////
-import { getDecks, getDeck } from '../utils/api';
-///////////
-///////////
-
 const DECKS_STORAGE_KEY = 'UdaciFlashcards:decks'
 
-export function saveDeck(deckTitle) {
-  try {
-    
-    console.log('saveDeck: ', deckTitle);
+export function getDecks() {
 
-    return AsyncStorage.setItem(deckTitle, JSON.stringify({ deckTitle, questions: [] }));
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
-
-/*
-export function fetchDecks () {
-  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
-    .then((value) => {
-    if (value) {
-      console.log('value: ', value);
-    } else {
-      this.setDummyData();
-    }
-  })
-}
-*/
-
-export function getAllDecks() {
-  
-  console.log(getAllDecks);
+  //console.log('api getDecks');
 
   return AsyncStorage.getAllKeys().then(keys => {
+    
+    //console.log('AsyncStorage.getAllKeys');
+
     return AsyncStorage.multiGet(keys).then(stores => {
       return stores.map((result, i, store) => {
-        // get at each store's key/value so you can work with it
-        let key = store[i][0];
+        let deck = store[i][0];
         let value = JSON.parse(store[i][1]);
         if (value) {
           return {
-            key,
-            title: value.title,
+            deck,
             questions: value.questions
           };
         }
@@ -61,11 +30,47 @@ export function getAllDecks() {
 }
 
 
+export function saveDeck(title) {
+  console.log('api saveDeck');
+  try {
+    return AsyncStorage.setItem(title, JSON.stringify({ title, questions: [] }));
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 
 
 
+
+
+
+/*
+export function saveDeck(deckTitle) {
+  try {
+    
+    console.log('saveDeck: ', deckTitle);
+
+    return AsyncStorage.setItem(deckTitle, JSON.stringify({ deckTitle, questions: [] }));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+
+export function fetchDecks () {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then((value) => {
+    if (value) {
+      console.log('value: ', value);
+    } else {
+      this.setDummyData();
+    }
+  })
+}
 
 
 
@@ -94,7 +99,6 @@ function setDummyData () {
   return dummyData
 }
 
-/*
 
  { 
       "ID": "1",

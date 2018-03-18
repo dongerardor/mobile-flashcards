@@ -4,7 +4,7 @@ import { wine, gray, white, yellow } from '../utils/colors'
 import { FontAwesome } from '@expo/vector-icons'
 import TextButton from './TextButton';
 import { saveDeck } from '../utils/api';
-import { fetchDeckDB } from '../actions';
+//import { fetchDeckDB } from '../actions';
 
 export default class Deck extends React.Component {
   constructor(props) {
@@ -13,6 +13,9 @@ export default class Deck extends React.Component {
   }
 
   addDeck = () => {
+    
+    console.log('addDeck');
+
     const deckTitle = this.state.deckTitle;
     if (deckTitle) {
       saveDeck(deckTitle);
