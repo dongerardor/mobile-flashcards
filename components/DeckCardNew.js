@@ -7,8 +7,8 @@ import TextButton from './TextButton';
 export default class DeckCardNew extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = { cardQuestion: '', cardAnswer: '' };
+    
+    this.state = { question: '', answer: '' };
   }
 
   addCard = () => {

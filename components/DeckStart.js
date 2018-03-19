@@ -1,23 +1,34 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { wine, gray, white, yellow } from '../utils/colors'
 import { FontAwesome } from '@expo/vector-icons'
 import DeckCardNew from './DeckCardNew';
 import TextButton from './TextButton';
-import { getDeckDetails } from '../actions';
+import { fetchDeck } from '../actions';
 
-export default class DeckStart extends React.Component {
+class DeckStart extends React.Component {
   constructor(props) {
     super(props)
     this.state = { status: 0 }
   }
 
   componentDidMount() {
-    //this.props.DeckStart(this.props.navigation.state.params.deckId);
+    //console.log('DeckStart componentDidMount this.props.navigation', this.props.navigation.state.params.entryId);
+    //entryId
+    //navTitle
+    const deckId = this.props.navigation.state.params.entryId;
+    if (deckId) {
+      this.props.fetchDeck(deckId);
+    }
   }
 
   componentDidUpdate() {
-    //this.props.DeckStart(this.props.navigation.state.params.deckId);
+    //this.props.getDeckDetails(this.props.navigation.state.params.deckId);
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log('DeckStart componentWillReceiveProps: ', nextProps)
   }
 
   start = () => {
@@ -27,15 +38,21 @@ export default class DeckStart extends React.Component {
 
   addCard = () => {
     const { navigate } = this.props.navigation;
-    navigate('DeckCardNew');
+    navigate('DeckCardNew', { 
+      navTitle: this.props.title,
+      title: this.props.title
+    });
   }
 
   render() {
+    console.log('DeckStart render props: ', this.props);
+    const cardsQtyText = this.props.questions ? <Text style={styles.deckItemCardsQty}>Cards: { this.props.questions.length }</Text> : null;
+    const deckTitle = this.props.title ? <Text>{ this.props.title }</Text> : null;
     return (
       <View>
-        <Text style = {styles.deckItemCardsQty}>
-          This deck has 9 cards
-        </Text>
+        { cardsQtyText }
+        { deckTitle }
+
         <TextButton onPress={this.start}>
             START DECK
         </TextButton>
@@ -69,3 +86,13 @@ const styles = StyleSheet.create ({
     height: 40,
   }
 });
+
+const mapStateToProps = state => {
+  //console.log('mapStateToProps', state);
+  const { title, questions } = state.deckItem ? state.deckItem : ('', []);
+  return { title, questions };
+};
+
+const mapDispatchToProps = { fetchDeck };
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckStart);

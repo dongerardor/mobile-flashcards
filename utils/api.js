@@ -8,7 +8,7 @@ export function getDecks() {
 
   return AsyncStorage.getAllKeys().then(keys => {
     
-    //console.log('AsyncStorage.getAllKeys');
+    console.log('AsyncStorage.getAllKeys', keys);
 
     return AsyncStorage.multiGet(keys).then(stores => {
       return stores.map((result, i, store) => {
@@ -29,6 +29,9 @@ export function getDecks() {
   });
 }
 
+export function getDeck(deckId) {
+  return AsyncStorage.getItem(deckId);
+}
 
 export function saveDeck(title) {
   console.log('api saveDeck');

@@ -18,15 +18,16 @@ class DecksList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('DecksList componentWillReceiveProps nextProps', nextProps);
     if (this.state.decks !== nextProps.decks) {
       this.setState({ decks: nextProps.decks });
     }
   }
 
   goToDeck = (deck) => {
-    console.log('DecksList goToDeck');
+    //console.log('DecksList goToDeck params', deck);
     const { navigate } = this.props.navigation;
-    navigate('DeckStart');
+    navigate('DeckStart', deck);
   }
 
   addDeck = () => {
@@ -41,22 +42,24 @@ class DecksList extends React.Component {
   render() {
 
     //console.log("render state: ", this.state.decks);
+    /*let displayDecksList = <Text>Press ADD DECK to get started</Text>;
+    if(this.state.decks && this.state.decks.length < 0) {
+      displayDecksList = this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>));
+    }*/
 
-    const displayDecksList = this.state.decks.length === 0 
-      ? (<Text>Press ADD DECK to get started</Text>)
-      : (this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>));
+    const displayDecksList = this.state.decks && this.state.decks.length === 0 
+    ? (<Text>Press ADD DECK to get started</Text>)
+    : (this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>));
 
     return (
       <ScrollView>
-        <TextButton onPress={this.goToDeck}>
-            GO TO DECK
+        <TextButton onPress={this.addDeck}>
+          ADD DECK
         </TextButton>
         
         { displayDecksList }
 
-        <TextButton onPress={this.addDeck}>
-            ADD DECK
-        </TextButton>
+
       </ScrollView>
     );
   }
