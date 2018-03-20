@@ -1,20 +1,38 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { wine, gray, white, yellow } from '../utils/colors'
+import { KeyboardAvoidingView, Keyboard } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'
 import TextButton from './TextButton';
+import { addCardToDeck } from '../utils/api';
 
-export default class DeckCardNew extends React.Component {
+class DeckCardNew extends React.Component {
   constructor(props) {
     super(props)
-    
-    this.state = { question: '', answer: '' };
+    this.state = { question: '', answer: '', errorMsg: '' };
   }
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.state.params.navTitle
+    }
+  };
+
   addCard = () => {
-    const { navigate } = this.props.navigation;
-    navigate('DeckStart');
-  }
+    if (this.state.question && this.state.answer) {
+      const { question, answer } = this.state;
+      const card = { question, answer };
+      const title = this.props.navigation.state.params.title;
+
+      addCardToDeck(title, card);
+
+      this.setState({ question: '', answer: '', errorMsg: '' });
+      this.props.navigation.goBack(Keyboard.dismiss());
+    } else {
+      this.setState({ errorMsg: 'Question and answer required.' })
+    }
+  };
+
 
   render() {
     return (
@@ -25,8 +43,8 @@ export default class DeckCardNew extends React.Component {
 
         <TextInput
           style={ styles.textInput }
-          onChangeText={(cardQuestion) => this.setState({cardQuestion})}
-          value={this.state.cardQuestion}
+          onChangeText={(question) => this.setState({question})}
+          value={this.state.question}
         />
 
         <Text style={styles.title}>
@@ -35,8 +53,8 @@ export default class DeckCardNew extends React.Component {
 
         <TextInput
           style={ styles.textInput }
-          onChangeText={(cardAnswer) => this.setState({cardAnswer})}
-          value={this.state.cardAnswer}
+          onChangeText={(answer) => this.setState({answer})}
+          value={this.state.answer}
         />
 
         <TextButton onPress={this.addCard}>
@@ -68,3 +86,5 @@ const styles = StyleSheet.create ({
     height: 40,
   }
 });
+
+export default DeckCardNew;

@@ -2,7 +2,7 @@ export const FETCH_ALL_DECKS = 'fetch_all_decks';
 export const FETCH_DECK = 'fetch_deck';
 
 import { AsyncStorage } from 'react-native';
-import { getDecks, getDeck } from '../utils/api';
+import { getDecks, getDeck, addCard } from '../utils/api';
 
 export function fetchAllDecks() {
   //console.log('actions fetchAllDecks');
@@ -19,7 +19,6 @@ export function fetchDeck(deckId) {
     .then(data => dispatch({ type: FETCH_DECK, payload: JSON.parse(data) }));
   }
 }
-
 
 
 /*

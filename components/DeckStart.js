@@ -14,9 +14,9 @@ class DeckStart extends React.Component {
   }
 
   componentDidMount() {
-    //console.log('DeckStart componentDidMount this.props.navigation', this.props.navigation.state.params.entryId);
     //entryId
     //navTitle
+    console.log('DeckStart componentDidMount this.props.navigation', this.props.navigation.state);
     const deckId = this.props.navigation.state.params.entryId;
     if (deckId) {
       this.props.fetchDeck(deckId);
