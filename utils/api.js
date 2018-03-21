@@ -30,11 +30,12 @@ export function getDecks() {
 }
 
 export function getDeck(deckId) {
+  console.log('getDeck', deckId);
   return AsyncStorage.getItem(deckId);
 }
 
 export function saveDeck(title) {
-  console.log('api saveDeck');
+  //console.log('api saveDeck');
   try {
     return AsyncStorage.setItem(title, JSON.stringify({ title, questions: [] }));
   } catch (error) {

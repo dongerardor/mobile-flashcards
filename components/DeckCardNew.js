@@ -8,7 +8,11 @@ import { addCardToDeck } from '../utils/api';
 
 class DeckCardNew extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+    
+    this.entryId = props.navigation.state.params.entryId;
+    console.log('DeckCardNew constructor this.entryId: ', this.entryId);
+
     this.state = { question: '', answer: '', errorMsg: '' };
   }
 
@@ -19,6 +23,9 @@ class DeckCardNew extends React.Component {
   };
 
   addCard = () => {
+    
+    console.log('DeckCardNew addCard this.entryId: ', this.entryId);
+
     if (this.state.question && this.state.answer) {
       const { question, answer } = this.state;
       const card = { question, answer };
@@ -27,7 +34,13 @@ class DeckCardNew extends React.Component {
       addCardToDeck(title, card);
 
       this.setState({ question: '', answer: '', errorMsg: '' });
-      this.props.navigation.goBack(Keyboard.dismiss());
+      const { navigate } = this.props.navigation;
+      navigate('DeckStart', { 
+        navTitle: this.props.title,
+        title: this.props.title,
+        entryId: this.entryId,
+      });
+     // this.props.navigation.goBack(Keyboard.dismiss());
     } else {
       this.setState({ errorMsg: 'Question and answer required.' })
     }

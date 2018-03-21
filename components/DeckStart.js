@@ -9,8 +9,8 @@ import { fetchDeck } from '../actions';
 
 class DeckStart extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = { status: 0 }
+    super(props);
+    this.state = { entryId: '' };
   }
 
   componentDidMount() {
@@ -24,28 +24,39 @@ class DeckStart extends React.Component {
   }
 
   componentDidUpdate() {
-    //this.props.getDeckDetails(this.props.navigation.state.params.deckId);
+    //const deckId = this.props.navigation.state.params.entryId;
+    //console.log('DeckStart componentDidUpdate deckId: ', deckId);
+    /*if (deckId) {
+      this.props.fetchDeck(deckId);
+    }*/
   }
 
   componentWillReceiveProps(nextProps){
-    console.log('DeckStart componentWillReceiveProps: ', nextProps)
+    console.log('DeckStart componentWillReceiveProps: ', nextProps);
+    if (nextProps.navigation.state.params.entryId != this.state.entryId){
+      this.setState({'entryId': nextProps.navigation.state.params.entryId});
+    }
   }
 
   start = () => {
-    const { navigate } = this.props.navigation;
-    navigate('DeckCardQuestion');
+    //const { navigate } = this.props.navigation;
+    //navigate('DeckCardQuestion');
   }
 
   addCard = () => {
+    
+    //console.log('DeckStart addCard entryId: ', this.props.navigation.state.params.entryId);
+
     const { navigate } = this.props.navigation;
     navigate('DeckCardNew', { 
       navTitle: this.props.title,
-      title: this.props.title
+      title: this.props.title,
+      entryId: this.props.title,
     });
   }
 
   render() {
-    console.log('DeckStart render props: ', this.props);
+    //console.log('DeckStart render props: ', this.props);
     const cardsQtyText = this.props.questions ? <Text style={styles.deckItemCardsQty}>Cards: { this.props.questions.length }</Text> : null;
     const deckTitle = this.props.title ? <Text>{ this.props.title }</Text> : null;
     return (
