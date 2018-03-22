@@ -9,10 +9,7 @@ import { addCardToDeck } from '../utils/api';
 class DeckCardNew extends React.Component {
   constructor(props) {
     super(props);
-    
     this.entryId = props.navigation.state.params.entryId;
-    console.log('DeckCardNew constructor this.entryId: ', this.entryId);
-
     this.state = { question: '', answer: '', errorMsg: '' };
   }
 
@@ -23,9 +20,6 @@ class DeckCardNew extends React.Component {
   };
 
   addCard = () => {
-    
-    console.log('DeckCardNew addCard this.entryId: ', this.entryId);
-
     if (this.state.question && this.state.answer) {
       const { question, answer } = this.state;
       const card = { question, answer };
@@ -36,11 +30,8 @@ class DeckCardNew extends React.Component {
       this.setState({ question: '', answer: '', errorMsg: '' });
       const { navigate } = this.props.navigation;
       navigate('DeckStart', { 
-        navTitle: this.props.title,
-        title: this.props.title,
         entryId: this.entryId,
       });
-     // this.props.navigation.goBack(Keyboard.dismiss());
     } else {
       this.setState({ errorMsg: 'Question and answer required.' })
     }
@@ -81,22 +72,20 @@ class DeckCardNew extends React.Component {
 const styles = StyleSheet.create ({
   title: {
     fontSize: 18,
-    paddingLeft: 10,
-    paddingRight: 10,
+    fontWeight: 'bold',
+    padding: 20,
     minWidth: 0,
   },
   text: {
-    fontSize: 14,
-    paddingLeft: 10,
-    paddingRight: 10,
+    fontSize: 18,
+    padding: 20,
     minWidth: 0,
   },
   textInput: {
     fontSize: 22,
-    paddingLeft: 10,
-    paddingRight: 10,
+    padding: 20,
     minWidth: 0,
-    height: 40,
+    height: 90,
   }
 });
 

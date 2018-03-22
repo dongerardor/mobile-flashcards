@@ -1,13 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { wine, gray, white, yellow } from '../utils/colors';
-import { FontAwesome } from '@expo/vector-icons';
+import { gray } from '../utils/colors';
 
 export default class DeckListItem extends React.Component {
   constructor(props) {
     super(props)
-    //props.data.deck
-    //props.data.questions
   }
 
   goToDeck = () => this.props.goToDeck({
@@ -46,7 +43,7 @@ const styles = StyleSheet.create ({
     borderBottomWidth: 1,
   },
   deckListItemTitle: {
-    fontSize: 18,
+    fontSize: 24,
     paddingLeft: 10,
     paddingRight: 10,
     minWidth: 0,

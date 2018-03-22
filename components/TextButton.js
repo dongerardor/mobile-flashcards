@@ -23,5 +23,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     alignSelf: 'center',
     fontSize: 22,
+    alignSelf: 'stretch',
   }
 })

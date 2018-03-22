@@ -13,21 +13,18 @@ class DecksList extends React.Component {
     this.state = { decks: [] }
   }
 
+  static navigationOptions = {
+    title: 'Welcome to Flashcards',
+  };
+
   componentDidMount() {
     this.props.fetchAllDecks();
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('DecksList componentWillReceiveProps nextProps', nextProps);
     if (this.state.decks !== nextProps.decks) {
       this.setState({ decks: nextProps.decks });
     }
-  }
-
-  goToDeck = (deck) => {
-    //console.log('DecksList goToDeck params', deck);
-    const { navigate } = this.props.navigation;
-    navigate('DeckStart', deck);
   }
 
   addDeck = () => {
@@ -35,31 +32,21 @@ class DecksList extends React.Component {
     navigate('DeckNew');
   }
 
-  static navigationOptions = {
-    title: 'Welcome',
-  };
+  goToDeck = (deck) => {
+    const { navigate } = this.props.navigation;
+    navigate('DeckStart', deck);
+  }
 
   render() {
-
-    //console.log("render state: ", this.state.decks);
-    /*let displayDecksList = <Text>Press ADD DECK to get started</Text>;
-    if(this.state.decks && this.state.decks.length < 0) {
-      displayDecksList = this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>));
-    }*/
-
     const displayDecksList = this.state.decks && this.state.decks.length === 0 
-    ? (<Text>Press ADD DECK to get started</Text>)
+    ? <Text style= { styles.msg }>Press ADD DECK to get started</Text>
     : (this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>));
 
     return (
       <ScrollView>
-        <TextButton onPress={this.addDeck}>
-          ADD DECK
-        </TextButton>
+        <TextButton onPress={this.addDeck}>ADD DECK</TextButton>
         
         { displayDecksList }
-
-
       </ScrollView>
     );
   }
@@ -67,7 +54,6 @@ class DecksList extends React.Component {
 
 const mapStateToProps = state => {
   const decks = state.decks;
-
   return { decks };
 };
 
@@ -75,43 +61,11 @@ const mapDispatchToProps = { fetchAllDecks };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecksList);
 
-
-
-
-
-
-/*
-
-        {this.state.decks.length === 0
-          ? <DeckListItem />
-          : <Text>Press ADD DECK to get started</Text>
-        }
-
-
-
-{this.props.decks.length > 0
-          ?
-          this.props.decks.map((deck) => {
-            <DeckListItem data={deck} />
-          }
-          : <Text>Press ADD DECK to get started!"<Text/>
-        }
-
- componentDidMount () {
-    
-
-    fetchCalendarResults()
-      .then((entries) => dispatch(receiveEntries(entries)))
-      .then(({ entries }) => {
-        if (!entries[timeToString()]) {
-          dispatch(addEntry({
-            [timeToString()]: getDailyReminderValue()
-          }))
-        }
-      })
-      .then(() => this.setState(() => ({ready: true})))
-  }
-
-  componentDidUpdate() {
-    //this.props.fetchAllDecks()
-  }*/
+const styles = StyleSheet.create ({
+  msg: {
+    fontSize: 18,
+    paddingLeft: 10,
+    fontWeight: 'bold',
+    minWidth: 0,  
+  },
+})

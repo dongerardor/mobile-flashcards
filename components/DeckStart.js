@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { wine, gray, white, yellow } from '../utils/colors'
-import { FontAwesome } from '@expo/vector-icons'
-import DeckCardNew from './DeckCardNew';
+import { StyleSheet, Text, View } from 'react-native';
+
 import TextButton from './TextButton';
+import DeckCardNew from './DeckCardNew';
+
 import { fetchDeck } from '../actions';
 
 class DeckStart extends React.Component {
@@ -13,26 +13,18 @@ class DeckStart extends React.Component {
     this.state = { entryId: '' };
   }
 
+  static navigationOptions = {
+    title: 'Deck',
+  };
+
   componentDidMount() {
-    //entryId
-    //navTitle
-    console.log('DeckStart componentDidMount this.props.navigation', this.props.navigation.state);
     const deckId = this.props.navigation.state.params.entryId;
     if (deckId) {
       this.props.fetchDeck(deckId);
     }
   }
 
-  componentDidUpdate() {
-    //const deckId = this.props.navigation.state.params.entryId;
-    //console.log('DeckStart componentDidUpdate deckId: ', deckId);
-    /*if (deckId) {
-      this.props.fetchDeck(deckId);
-    }*/
-  }
-
   componentWillReceiveProps(nextProps){
-    console.log('DeckStart componentWillReceiveProps: ', nextProps);
     if (nextProps.navigation.state.params.entryId != this.state.entryId){
       this.setState({'entryId': nextProps.navigation.state.params.entryId});
     }
@@ -44,62 +36,43 @@ class DeckStart extends React.Component {
   }
 
   addCard = () => {
-    
-    //console.log('DeckStart addCard entryId: ', this.props.navigation.state.params.entryId);
-
     const { navigate } = this.props.navigation;
     navigate('DeckCardNew', { 
-      navTitle: this.props.title,
-      title: this.props.title,
       entryId: this.props.title,
     });
   }
 
   render() {
-    //console.log('DeckStart render props: ', this.props);
-    const cardsQtyText = this.props.questions ? <Text style={styles.deckItemCardsQty}>Cards: { this.props.questions.length }</Text> : null;
-    const deckTitle = this.props.title ? <Text>{ this.props.title }</Text> : null;
+    const cardsQtyText = this.props.questions ? `Cards: ${this.props.questions.length}` : `No cards yet`;
     return (
       <View>
-        { cardsQtyText }
-        { deckTitle }
-
-        <TextButton onPress={this.start}>
-            START DECK
-        </TextButton>
-        <TextButton onPress={this.addCard}>
-            ADD CARD TO DECK
-        </TextButton>
+        <Text style={ styles.text }> { cardsQtyText } </Text>
+        <Text style={ styles.title }> { this.props.title } </Text>
+        <TextButton onPress={ this.start }>START DECK</TextButton>
+        <TextButton onPress={ this.addCard }>ADD CARD TO DECK</TextButton>
       </View>
     );
   }
 }
 
-
 const styles = StyleSheet.create ({
   title: {
-    fontSize: 18,
+    fontSize: 38,
     paddingLeft: 10,
     paddingRight: 10,
+    paddingTop: 50,
+    paddingBottom: 50,
     minWidth: 0,
   },
   text: {
-    fontSize: 14,
+    fontSize: 18,
     paddingLeft: 10,
-    paddingRight: 10,
-    minWidth: 0,
+    fontWeight: 'bold',
+    minWidth: 0,  
   },
-  textInput: {
-    fontSize: 22,
-    paddingLeft: 10,
-    paddingRight: 10,
-    minWidth: 0,
-    height: 40,
-  }
 });
 
 const mapStateToProps = state => {
-  //console.log('mapStateToProps', state);
   const { title, questions } = state.deckItem ? state.deckItem : ('', []);
   return { title, questions };
 };
