@@ -4,7 +4,6 @@ import { wine, gray, white, yellow } from '../utils/colors'
 import { FontAwesome } from '@expo/vector-icons'
 import TextButton from './TextButton';
 import { saveDeck } from '../utils/api';
-//import { fetchDeckDB } from '../actions';
 
 export default class Deck extends React.Component {
   constructor(props) {
@@ -13,29 +12,23 @@ export default class Deck extends React.Component {
   }
 
   addDeck = () => {
-    
-    console.log('addDeck');
-
-    const deckTitle = this.state.deckTitle;
-    if (deckTitle) {
-      saveDeck(deckTitle);
-      this.setState({
-        errorMessage: false,
-        deckTitle: ''
+    const entryId = this.state.deckTitle;
+    if (entryId) {
+      saveDeck(entryId).then(() => {
+        this.setState({ errorMessage: false });  
+      
+        this.props.navigation.navigate(
+          'DeckStart',
+          {
+            entryId,
+          }
+        );
       });
 
-      this.props.navigation.navigate(
-        'DeckStart',
-        {
-          navTitle: deckTitle,
-          deckId: deckTitle,
-        }
-      );
     } else {
       this.setState({ errorMessage: true })
     }
   }
-  //this.props.navigation.navigate('DecksList');
 
   render() {
     return (

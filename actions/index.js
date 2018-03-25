@@ -14,6 +14,9 @@ export function fetchAllDecks() {
 export function fetchDeck(deckId) {
   return (dispatch) => {
     getDeck(deckId)
-    .then(data => dispatch({ type: FETCH_DECK, payload: JSON.parse(data) }));
+    .then(data => { 
+      console.log('fetchDeck data: ', data);
+      return dispatch({ type: FETCH_DECK, payload: JSON.parse(data) })
+    });
   }
 }

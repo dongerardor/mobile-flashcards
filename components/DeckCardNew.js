@@ -15,7 +15,7 @@ class DeckCardNew extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.state.params.navTitle
+      title: `Deck - Add card`
     }
   };
 
@@ -23,15 +23,14 @@ class DeckCardNew extends React.Component {
     if (this.state.question && this.state.answer) {
       const { question, answer } = this.state;
       const card = { question, answer };
-      const title = this.props.navigation.state.params.title;
-
-      addCardToDeck(title, card);
-
-      this.setState({ question: '', answer: '', errorMsg: '' });
+      const entryId = this.entryId;
       const { navigate } = this.props.navigation;
-      navigate('DeckStart', { 
-        entryId: this.entryId,
+
+      addCardToDeck(entryId, card).then(() => {
+        this.setState({ question: '', answer: '', errorMsg: '' });
+        navigate('DeckStart', { entryId }); 
       });
+      
     } else {
       this.setState({ errorMsg: 'Question and answer required.' })
     }
