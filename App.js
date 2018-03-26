@@ -10,10 +10,8 @@ import reducer from './reducers';
 import DecksList        from './components/DecksList'; 
 import DeckStart        from './components/DeckStart'; 
 import DeckNew          from './components/DeckNew'; 
-import DeckCardFinal    from './components/DeckCardFinal'; 
 import DeckCardNew      from './components/DeckCardNew'; 
-import DeckCardQuestion from './components/DeckCardQuestion'; 
-import DeckCardAnswer   from './components/DeckCardAnswer'; 
+import DeckCard         from './components/DeckCard'; 
 
 import { wine, white } from './utils/colors';
 
@@ -45,15 +43,6 @@ const MainNavigator = StackNavigator({
       }
     }    
   },
-  DeckCardFinal : {
-    screen: DeckCardFinal,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: wine,
-      }
-    }    
-  },
   DeckCardNew : {
     screen: DeckCardNew,
     navigationOptions: {
@@ -63,17 +52,8 @@ const MainNavigator = StackNavigator({
       }
     } 
   },
-  DeckCardQuestion : {
-    screen: DeckCardQuestion,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: wine,
-      }
-    }    
-  },
-  DeckCardAnswer : {
-    screen: DeckCardAnswer,
+  DeckCard : {
+    screen: DeckCard,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {

@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import TextButton from './TextButton';
 import DeckCardNew from './DeckCardNew';
+import DeckCard from './DeckCard';
 
 import { fetchDeck } from '../actions';
 
@@ -22,7 +23,7 @@ class DeckStart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("DeckStart componentWillReceiveProps nextProps: ", nextProps.navigation.state.params.entryId);
+    //console.log("DeckStart componentWillReceiveProps nextProps: ", nextProps.navigation.state.params.entryId);
     if (nextProps.navigation.state.params.entryId != this.state.entryId){
       this.setState({
         'entryId': nextProps.navigation.state.params.entryId
@@ -31,8 +32,11 @@ class DeckStart extends React.Component {
   }
 
   start = () => {
-    //const { navigate } = this.props.navigation;
-    //navigate('DeckCardQuestion');
+    const { navigate } = this.props.navigation;
+    navigate('DeckCard', { 
+      entryId: this.state.entryId,
+      questions: this.props.questions,
+    });
   }
 
   addCard = () => {
@@ -43,15 +47,18 @@ class DeckStart extends React.Component {
   }
 
   render() {
-    console.log('DeckStart render questions: ', this.props.questions);
-    const cardsQtyText = this.props.questions ? `Cards: ${this.props.questions.length}` : `No cards yet`;
+    /*console.log('DeckStart render questions: ', this.props.questions);
     console.log('DeckStart render cardsQtyText: ', cardsQtyText);
-    console.log('DeckStart render title: ', this.state.entryId);
+    console.log('DeckStart render title: ', this.state.entryId);*/
+    const cardsQtyText = this.props.questions ? `Cards: ${this.props.questions.length}` : `No cards yet`;
+    const startButton = this.props.questions && this.props.questions.length 
+      ? <TextButton onPress={ this.start }>BEGIN QUIZ</TextButton>
+      : <Text style={ styles.text }> Add cards to start </Text>;
     return (
       <View>
         <Text style={ styles.text }> { cardsQtyText } </Text>
         <Text style={ styles.title }> { this.state.entryId } </Text>
-        <TextButton onPress={ this.start }>START DECK</TextButton>
+        { startButton }
         <TextButton onPress={ this.addCard }>ADD CARD TO DECK</TextButton>
       </View>
     );
