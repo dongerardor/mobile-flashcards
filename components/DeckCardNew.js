@@ -39,8 +39,11 @@ class DeckCardNew extends React.Component {
 
   render() {
     return (
-      <View>
-        <Text style={styles.title}>
+      <KeyboardAvoidingView
+        style={ styles.keyboardAvoiding }
+        behavior="padding"
+      >
+        <Text style={ styles.title }>
           Question:
         </Text>
 
@@ -63,7 +66,7 @@ class DeckCardNew extends React.Component {
         <TextButton onPress={this.addCard}>
             ADD CARD
         </TextButton>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -85,7 +88,13 @@ const styles = StyleSheet.create ({
     padding: 20,
     minWidth: 0,
     height: 90,
-  }
+  },
+  keyboardAvoiding: {
+    flex: 1,
+      justifyContent: 'center',
+      alignContent: 'center'
+    }
+  },
 });
 
 export default DeckCardNew;
