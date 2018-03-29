@@ -1,7 +1,5 @@
 import { AsyncStorage } from 'react-native';
 
-const DECKS_STORAGE_KEY = 'UdaciFlashcards:decks'
-
 export function getDecks() {
   return AsyncStorage.getAllKeys().then(keys => {
     return AsyncStorage.multiGet(keys).then(stores => {
@@ -36,14 +34,11 @@ export function saveDeck(title) {
 }
 
 export function addCardToDeck(title, card) {
-
   try {
     return AsyncStorage.getItem(title).then(result => {
       const data = JSON.parse(result);
-
       let questions = data.questions;
       questions.push(card);
-      
       return AsyncStorage.mergeItem(title, JSON.stringify({
         questions
       }));

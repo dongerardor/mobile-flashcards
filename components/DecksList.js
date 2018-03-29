@@ -1,21 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, ScrollView } from 'react-native';
 import { wine, gray, white, yellow } from '../utils/colors';
-import { FontAwesome } from '@expo/vector-icons';
 import TextButton from './TextButton';
 import DeckListItem from './DeckListItem';
 import { fetchAllDecks } from '../actions';
 
 class DecksList extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = { decks: [] }
+    super(props);
+    this.state = { decks: [] };
   }
-
-  static navigationOptions = {
-    title: 'Welcome to Flashcards',
-  };
 
   componentDidMount() {
     this.props.fetchAllDecks();
@@ -29,7 +24,7 @@ class DecksList extends React.Component {
 
   addDeck = () => {
     const { navigate } = this.props.navigation;
-    navigate('DeckNew');
+    navigate('DeckNew', { decks: this.state.decks });
   }
 
   goToDeck = (deck) => {
@@ -39,13 +34,12 @@ class DecksList extends React.Component {
 
   render() {
     const displayDecksList = this.state.decks && this.state.decks.length === 0 
-    ? <Text style= { styles.msg }>Press ADD DECK to get started</Text>
+    ? <Text style= { styles.msg }>Press ADD NEW DECK to get started</Text>
     : (this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>));
 
     return (
       <ScrollView>
-        <TextButton onPress={this.addDeck}>ADD DECK</TextButton>
-        
+        <TextButton onPress={this.addDeck}>ADD NEW DECK</TextButton>
         { displayDecksList }
       </ScrollView>
     );

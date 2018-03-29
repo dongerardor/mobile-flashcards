@@ -8,7 +8,7 @@ export default class DeckListItem extends React.Component {
   }
 
   goToDeck = () => this.props.goToDeck({
-      entryId: this.props.data.deck,
+      deck: this.props.data.deck,
       navTitle: this.props.data.deck
   })
 
@@ -43,14 +43,11 @@ const styles = StyleSheet.create ({
     borderBottomWidth: 1,
   },
   deckListItemTitle: {
-    fontSize: 24,
-    paddingLeft: 10,
-    paddingRight: 10,
+    fontSize: 22,
     minWidth: 0,
   },
   deckListItemCardsQty: {
     fontSize: 18,
-    paddingLeft: 10,
     fontWeight: 'bold',
     minWidth: 0,  
   },

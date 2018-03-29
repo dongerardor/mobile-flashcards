@@ -1,48 +1,47 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { wine, gray, white, yellow } from '../utils/colors'
-import { KeyboardAvoidingView, Keyboard } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import TextButton from './TextButton';
 import { addCardToDeck } from '../utils/api';
 
 class DeckCardNew extends React.Component {
   constructor(props) {
     super(props);
-    this.entryId = props.navigation.state.params.entryId;
-    this.state = { question: '', answer: '', errorMsg: '' };
+    this.deck = props.navigation.state.params.deck;
+    this.state = { question: '', answer: '', errorMessage: '' };
   }
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: `Deck - Add card`
-    }
-  };
-
   addCard = () => {
-    if (this.state.question && this.state.answer) {
-      const { question, answer } = this.state;
+    const { question, answer } = this.state;
+    
+    if (!!question.length && !!answer.length) {
       const card = { question, answer };
-      const entryId = this.entryId;
+      const deck = this.deck;
       const { navigate } = this.props.navigation;
 
-      addCardToDeck(entryId, card).then(() => {
-        this.setState({ question: '', answer: '', errorMsg: '' });
-        navigate('DeckStart', { entryId }); 
+      addCardToDeck(deck, card).then(() => {
+        this.setState({ question: '', answer: '', errorMessage: '' });
+        navigate('DeckStart', { deck }); 
       });
       
     } else {
-      this.setState({ errorMsg: 'Question and answer required.' })
+      this.setState({ errorMessage: 'Question and answer required.' })
     }
   };
 
-
   render() {
+    const errorMessage = !!this.state.errorMessage 
+      ? <Text style={ styles.text }>{ this.state.errorMessage }</Text>
+      : null;
+
     return (
       <KeyboardAvoidingView
         style={ styles.keyboardAvoiding }
         behavior="padding"
       >
+
+        { errorMessage }
+        
         <Text style={ styles.title }>Question:</Text>
         <TextInput
           style={ styles.textInput }
@@ -71,8 +70,9 @@ const styles = StyleSheet.create ({
     minWidth: 0,
   },
   text: {
-    fontSize: 18,
-    padding: 20,
+    fontSize: 14,
+    paddingLeft: 10,
+    paddingRight: 10,
     minWidth: 0,
   },
   textInput: {

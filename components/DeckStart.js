@@ -11,55 +11,46 @@ import { fetchDeck } from '../actions';
 class DeckStart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { entryId: '-'};
+    this.state = { deck: '' };
   }
 
-  static navigationOptions = {
-    title: 'Deck',
-  };
-
   componentDidMount() {
-      this.props.fetchDeck(this.props.navigation.state.params.entryId);
+      this.props.fetchDeck(this.props.navigation.state.params.deck);
   }
 
   componentWillReceiveProps(nextProps){
-    //console.log("DeckStart componentWillReceiveProps nextProps: ", nextProps.navigation.state.params.entryId);
-    if (nextProps.navigation.state.params.entryId != this.state.entryId){
-      this.setState({
-        'entryId': nextProps.navigation.state.params.entryId
-      });
+    if (nextProps.navigation.state.params.deck != this.state.deck){
+      this.setState({ deck: nextProps.navigation.state.params.deck });
     }
   }
 
   start = () => {
     const { navigate } = this.props.navigation;
     navigate('DeckCard', { 
-      entryId: this.state.entryId,
+      deck: this.state.deck,
       questions: this.props.questions,
     });
   }
 
   addCard = () => {
     const { navigate } = this.props.navigation;
-    navigate('DeckCardNew', { 
-      entryId: this.state.entryId,
-    });
+    navigate('DeckCardNew', { deck: this.state.deck });
   }
 
   render() {
-    /*console.log('DeckStart render questions: ', this.props.questions);
-    console.log('DeckStart render cardsQtyText: ', cardsQtyText);
-    console.log('DeckStart render title: ', this.state.entryId);*/
     const cardsQtyText = this.props.questions ? `Cards: ${this.props.questions.length}` : `No cards yet`;
     const startButton = this.props.questions && this.props.questions.length 
       ? <TextButton onPress={ this.start }>BEGIN QUIZ</TextButton>
       : <Text style={ styles.text }> Add cards to start </Text>;
+
+    console.log('DeckStart render');
+
     return (
       <View>
         <Text style={ styles.text }> { cardsQtyText } </Text>
-        <Text style={ styles.title }> { this.state.entryId } </Text>
+        <Text style={ styles.title }> { this.state.deck } </Text>
         { startButton }
-        <TextButton onPress={ this.addCard }>ADD CARD TO DECK</TextButton>
+        <TextButton onPress={ this.addCard }>ADD A CARD TO DECK</TextButton>
       </View>
     );
   }
@@ -68,17 +59,18 @@ class DeckStart extends React.Component {
 const styles = StyleSheet.create ({
   title: {
     fontSize: 38,
-    paddingLeft: 10,
-    paddingRight: 10,
+    marginLeft: 10,
+    marginRight: 10,
     paddingTop: 50,
     paddingBottom: 50,
     minWidth: 0,
   },
   text: {
     fontSize: 18,
-    paddingLeft: 10,
     fontWeight: 'bold',
-    minWidth: 0,  
+    minWidth: 0,
+    marginLeft: 10,
+    marginRight: 10, 
   },
 });
 

@@ -1,58 +1,51 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { wine, gray, white, yellow } from '../utils/colors'
-import { FontAwesome } from '@expo/vector-icons'
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import TextButton from './TextButton';
 import { saveDeck } from '../utils/api';
 
 export default class Deck extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {deckTitle: '', errorMessage: false};
+    this.state = {deck: '', decks: props.navigation.state.params.decks, errorMessage: ''};
   }
 
   addDeck = () => {
-    const entryId = this.state.deckTitle;
-    if (entryId) {
-      saveDeck(entryId).then(() => {
-        this.setState({ errorMessage: false });  
-      
-        this.props.navigation.navigate(
-          'DeckStart',
-          {
-            entryId,
-          }
-        );
-      });
+    const { deck, decks } = this.state;
 
+    const isExistingDeck = !!decks.filter(function(deckItem) {
+      return deck == deckItem.deck;
+    }).length;
+
+    if (isExistingDeck) {
+      this.setState({ errorMessage: 'Deck already exists' });
+    } else if (!deck.length){
+      this.setState({ errorMessage: 'Please add a title for new deck' });
     } else {
-      this.setState({ errorMessage: true })
+      saveDeck(deck).then(() => {
+        this.setState({ errorMessage: '' });  
+        this.props.navigation.navigate('DeckStart', { deck });
+      });
     }
   }
 
   render() {
+    const errorMsg = !!this.state.errorMessage 
+      ? <Text style={ styles.text }>{ this.state.errorMessage }</Text>
+      : null;
+
     return (
       <View>
-
-        <Text style={styles.title}>
-          New deck title:
-        </Text>
+        <Text style={styles.title}>New deck title:</Text>
 
         <TextInput
           style={ styles.textInput }
-          onChangeText={(deckTitle) => this.setState({deckTitle})}
-          value={this.state.deckTitle}
+          onChangeText={(deck) => this.setState({deck})}
+          value={this.state.deck}
         />
 
-        <Text
-          style={ styles.text }
-        >
-          { this.state.errorMessage ? 'Title is required' : '' }
-        </Text>
+        { errorMsg }
 
-        <TextButton onPress={ this.addDeck }>
-            ADD DECK
-        </TextButton>
+        <TextButton onPress={ this.addDeck }>ADD DECK</TextButton>
       </View>
     );
   }

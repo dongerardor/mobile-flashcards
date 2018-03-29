@@ -19,6 +19,7 @@ const MainNavigator = StackNavigator({
   DecksList : {
     screen: DecksList,
     navigationOptions: {
+      title: 'Welcome to Flashcards',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: wine,
@@ -28,6 +29,7 @@ const MainNavigator = StackNavigator({
   DeckStart : {
     screen: DeckStart,
     navigationOptions: {
+      title: 'Deck',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: wine,
@@ -37,6 +39,7 @@ const MainNavigator = StackNavigator({
   DeckNew : {
     screen: DeckNew,
     navigationOptions: {
+      title: 'Create a new deck',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: wine,
@@ -46,6 +49,7 @@ const MainNavigator = StackNavigator({
   DeckCardNew : {
     screen: DeckCardNew,
     navigationOptions: {
+      title: 'Add a new card to this deck',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: wine,

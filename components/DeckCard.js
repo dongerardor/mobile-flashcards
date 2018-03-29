@@ -1,15 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { wine, gray, white, yellow } from '../utils/colors'
-import { FontAwesome } from '@expo/vector-icons'
-import DeckCardNew from './DeckCardNew';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { wine } from '../utils/colors'
 import TextButton from './TextButton';
 import { NavigationActions } from 'react-navigation';
 
 export default class DeckCard extends React.Component {
   constructor(props) {
     super(props);
-    //console.log('params: ', this.props.navigation.state.params);
   }
 
   initialState = {
@@ -23,13 +20,18 @@ export default class DeckCard extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.state.params.entryId,
+      title: navigation.state.params.deck,
     }
   };
 
   goToDeck() {
     const back = NavigationActions.back();
     this.props.navigation.dispatch(back);
+  }
+
+  goToDecks() {
+    const { navigate } = this.props.navigation;
+    navigate('DecksList'); 
   }
 
   render() {
@@ -76,37 +78,30 @@ export default class DeckCard extends React.Component {
         </View>)
       }
     } else {
-      //end of quiz 
-      const btnRestart = <TextButton onPress={() => { this.setState(this.initialState); }}>RESTART QUIZ</TextButton>;
-      const btnGoToDeck = <TextButton 
-        onPress={() => this.goToDeck()}>GO TO DECK</TextButton>;
+      //end of quiz
+      const btnRestart = <TextButton onPress={() => { this.setState(this.initialState); }}>
+        RESTART QUIZ</TextButton>;
+      const btnGoToDeck = <TextButton onPress={() => this.goToDeck()}>
+        GO TO DECK</TextButton>;
+       const btnGoToDecks = <TextButton onPress={() => this.goToDecks()}>
+        SEE ALL DECKS</TextButton>;
 
       card = (<View>
-        <Text style={ styles.text }>You answered {correctAnswers} out of {questions.length} questions</Text>
+        <Text style={ styles.textLabel }>You answered {correctAnswers} out of {questions.length} questions</Text>
         { btnRestart }
         { btnGoToDeck }
-
+        { btnGoToDecks }
       </View>)
     }
 
     return (
-      <View>
-        { card }
-      </View>
+      <View>{ card }</View>
     );
   }
 }
 
 
 const styles = StyleSheet.create ({
-  title: {
-    fontSize: 38,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 50,
-    paddingBottom: 50,
-    minWidth: 0,
-  },
   text: {
     fontSize: 18,
     paddingLeft: 10,
