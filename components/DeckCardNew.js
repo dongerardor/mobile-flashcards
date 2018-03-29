@@ -43,29 +43,21 @@ class DeckCardNew extends React.Component {
         style={ styles.keyboardAvoiding }
         behavior="padding"
       >
-        <Text style={ styles.title }>
-          Question:
-        </Text>
-
+        <Text style={ styles.title }>Question:</Text>
         <TextInput
           style={ styles.textInput }
           onChangeText={(question) => this.setState({question})}
           value={this.state.question}
         />
 
-        <Text style={styles.title}>
-          Answer:
-        </Text>
-
+        <Text style={styles.title}>Answer:</Text>
         <TextInput
           style={ styles.textInput }
           onChangeText={(answer) => this.setState({answer})}
           value={this.state.answer}
         />
 
-        <TextButton onPress={this.addCard}>
-            ADD CARD
-        </TextButton>
+        <TextButton onPress={this.addCard}>ADD CARD</TextButton>
       </KeyboardAvoidingView>
     );
   }
@@ -91,9 +83,8 @@ const styles = StyleSheet.create ({
   },
   keyboardAvoiding: {
     flex: 1,
-      justifyContent: 'center',
-      alignContent: 'center'
-    }
+    justifyContent: 'center',
+    alignContent: 'center',
   },
 });
 
