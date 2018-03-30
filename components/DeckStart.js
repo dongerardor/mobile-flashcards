@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
+import { Keyboard } from 'react-native';
 
 import TextButton from './TextButton';
 import DeckCardNew from './DeckCardNew';
@@ -16,6 +17,7 @@ class DeckStart extends React.Component {
 
   componentDidMount() {
       this.props.fetchDeck(this.props.navigation.state.params.deck);
+      Keyboard.dismiss();
   }
 
   componentWillReceiveProps(nextProps){
