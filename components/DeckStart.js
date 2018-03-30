@@ -7,6 +7,8 @@ import TextButton from './TextButton';
 import DeckCardNew from './DeckCardNew';
 import DeckCard from './DeckCard';
 
+import { clearNotification, setNotification } from '../utils/notifications';
+
 import { fetchDeck } from '../actions';
 
 class DeckStart extends React.Component {
@@ -18,6 +20,7 @@ class DeckStart extends React.Component {
   componentDidMount() {
       this.props.fetchDeck(this.props.navigation.state.params.deck);
       Keyboard.dismiss();
+      clearNotification().then(setNotification);
   }
 
   componentWillReceiveProps(nextProps){
@@ -44,8 +47,6 @@ class DeckStart extends React.Component {
     const startButton = this.props.questions && this.props.questions.length 
       ? <TextButton onPress={ this.start }>BEGIN QUIZ</TextButton>
       : <Text style={ styles.text }> Add cards to start </Text>;
-
-    console.log('DeckStart render');
 
     return (
       <View>

@@ -15,6 +15,8 @@ import DeckCard         from './components/DeckCard';
 
 import { wine, white } from './utils/colors';
 
+import { setNotification } from './utils/notifications';
+
 const MainNavigator = StackNavigator({
   DecksList : {
     screen: DecksList,
@@ -68,6 +70,10 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setNotification();
+  }
+
   render() {
     const store = createStore(reducer, {}, applyMiddleware(ReduxThunk));
     return (
