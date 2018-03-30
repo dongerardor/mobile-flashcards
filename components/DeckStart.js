@@ -13,13 +13,11 @@ import { fetchDeck } from '../actions';
 
 class DeckStart extends React.Component {
   constructor(props) {
-    console.log('DeckStart constructor');
     super(props);
     this.state = { deck: '' };
   }
 
   componentDidMount() {
-    console.log('DeckStart deck: ', this.props.navigation.state.params);
     this.props.fetchDeck(this.props.navigation.state.params.deck);
     Keyboard.dismiss();
     clearNotification().then(setNotification);

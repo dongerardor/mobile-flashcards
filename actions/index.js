@@ -2,7 +2,7 @@ export const FETCH_ALL_DECKS = 'fetch_all_decks';
 export const FETCH_DECK = 'fetch_deck';
 
 import { AsyncStorage } from 'react-native';
-import { getDecks, getDeck } from '../utils/api';
+import { getDecks, getDeck, setStartupData as apiSetStartupData } from '../utils/api';
 
 export function fetchAllDecks() {
   return (dispatch) => {

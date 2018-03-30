@@ -1,8 +1,8 @@
 import { AsyncStorage } from 'react-native';
 
 /*
-@function getDecks 
-@return {Array<Objects>} All existing decks asyncronically
+@function getDecks Get all the existing decks
+@return {Promise} 
 */
 export function getDecks() {
   return AsyncStorage.getAllKeys().then(keys => {
@@ -26,9 +26,9 @@ export function getDecks() {
 }
 
 /*
-@function getDeck Get one selected deck
+@function getDeck Get a selected deck
 @param {String} deckId - also used as deck title
-@return {Object} Selected deck
+@return {Promise}
 */
 export function getDeck(deckId) {
   return AsyncStorage.getItem(deckId);
@@ -37,7 +37,7 @@ export function getDeck(deckId) {
 /*
 @function saveDeck 
 @param {String} deckId - also used as deck title
-@return Selected deck asyncronically
+@return {Promise}
 */
 export function saveDeck(title) {
   try {
@@ -51,7 +51,7 @@ export function saveDeck(title) {
 @function addCardToDeck Add one card to selected deck 
 @param {String} deckId - also used as deck title
 @param {Object} card - The card with questions and answers
-@return {Object} Selected deck
+@return {Promise} Selected deck
 */
 export function addCardToDeck(deckId, card) {
   try {
@@ -67,4 +67,54 @@ export function addCardToDeck(deckId, card) {
     console.log(error);
   }
   return "Card added to deck";
+}
+
+/*
+@function setStartupData Just for convenience, 
+ the user has the chance to start with some initial data
+@return {Promise} Selected deck
+*/
+export function setStartupData() {
+  try {
+    return AsyncStorage.multiSet([
+      ['React', JSON.stringify(
+        { deck: 'React',
+          questions: [
+            {
+              question: 'What is React?',
+              answer: 'A library for managing user interfaces',
+            },
+            {
+              question: 'Where do you make Ajax requests in React?',
+              answer: 'The componentDidMount lifecycle event',
+            }
+          ]
+        })
+      ],
+      ['JavaScript', JSON.stringify(
+        { deck: 'JavaScript',
+          questions: [
+            {
+              question: 'What is a closure?',
+              answer: 'The combination of a function and the lexical environment within which that function was declared - The combination of a function and the lexical environment within which that function was declared.',
+            },
+            {
+              question: 'Lorem ipsum dolor sit amet',
+              answer: 'Consectetur adipiscing elit. Proin sed lorem ac ipsum.',
+            },
+            {
+              question: 'Proin sed lorem ac ipsum feugiat',
+              answer: 'Aliquam nec dui sed ex lacinia facilisis.',
+            },
+            {
+              question: 'Quisque laoreet, magna at vulputate pre',
+              answer: 'Vivamus vitae felis nec massa porta fringilla',
+            }
+          ]
+        })
+      ]
+    ])
+  } catch (error) {
+    console.log(error);
+  }
 }
