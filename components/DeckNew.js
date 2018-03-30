@@ -11,7 +11,6 @@ export default class Deck extends React.Component {
 
   addDeck = () => {
     const { deck, decks } = this.state;
-
     const isExistingDeck = !!decks.filter(function(deckItem) {
       return deck == deckItem.deck;
     }).length;

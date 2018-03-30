@@ -1,5 +1,9 @@
 import { AsyncStorage } from 'react-native';
 
+/*
+@function getDecks 
+@return {Array<Objects>} All existing decks asyncronically
+*/
 export function getDecks() {
   return AsyncStorage.getAllKeys().then(keys => {
     return AsyncStorage.multiGet(keys).then(stores => {
@@ -21,10 +25,20 @@ export function getDecks() {
   });
 }
 
+/*
+@function getDeck Get one selected deck
+@param {String} deckId - also used as deck title
+@return {Object} Selected deck
+*/
 export function getDeck(deckId) {
   return AsyncStorage.getItem(deckId);
 }
 
+/*
+@function saveDeck 
+@param {String} deckId - also used as deck title
+@return Selected deck asyncronically
+*/
 export function saveDeck(title) {
   try {
     return AsyncStorage.setItem(title, JSON.stringify({ title, questions: [] }));
@@ -33,13 +47,19 @@ export function saveDeck(title) {
   }
 }
 
-export function addCardToDeck(title, card) {
+/*
+@function addCardToDeck Add one card to selected deck 
+@param {String} deckId - also used as deck title
+@param {Object} card - The card with questions and answers
+@return {Object} Selected deck
+*/
+export function addCardToDeck(deckId, card) {
   try {
-    return AsyncStorage.getItem(title).then(result => {
+    return AsyncStorage.getItem(deckId).then(result => {
       const data = JSON.parse(result);
       let questions = data.questions;
       questions.push(card);
-      return AsyncStorage.mergeItem(title, JSON.stringify({
+      return AsyncStorage.mergeItem(deckId, JSON.stringify({
         questions
       }));
     });

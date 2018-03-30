@@ -1,8 +1,3 @@
 export const wine = '#B24663'
-export const grey = '#757575'
 export const white = '#ffffff'
-export const yellow = '#FFF897'
-export const pink = '#FF7EA1'
-export const blue = '#50AECC'
-export const deepBlue = '#2F4D57'
 export const black = '#000'

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, ScrollView } from 'react-native';
-import { wine, gray, white, yellow } from '../utils/colors';
 import TextButton from './TextButton';
 import DeckListItem from './DeckListItem';
 import { fetchAllDecks } from '../actions';
