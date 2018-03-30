@@ -13,14 +13,16 @@ import { fetchDeck } from '../actions';
 
 class DeckStart extends React.Component {
   constructor(props) {
+    console.log('DeckStart constructor');
     super(props);
     this.state = { deck: '' };
   }
 
   componentDidMount() {
-      this.props.fetchDeck(this.props.navigation.state.params.deck);
-      Keyboard.dismiss();
-      clearNotification().then(setNotification);
+    console.log('DeckStart deck: ', this.props.navigation.state.params);
+    this.props.fetchDeck(this.props.navigation.state.params.deck);
+    Keyboard.dismiss();
+    clearNotification().then(setNotification);
   }
 
   componentWillReceiveProps(nextProps){
@@ -42,6 +44,11 @@ class DeckStart extends React.Component {
     navigate('DeckCardNew', { deck: this.state.deck });
   }
 
+  goToDecks = () => {
+    const { navigate } = this.props.navigation;
+    navigate('DecksList'); 
+  }
+
   render() {
     const cardsQtyText = this.props.questions ? `Cards: ${this.props.questions.length}` : `No cards yet`;
     const startButton = this.props.questions && this.props.questions.length 
@@ -54,6 +61,7 @@ class DeckStart extends React.Component {
         <Text style={ styles.title }> { this.state.deck } </Text>
         { startButton }
         <TextButton onPress={ this.addCard }>ADD A CARD TO DECK</TextButton>
+        <TextButton onPress={ this.goToDecks }>BACK TO ALL DECKS</TextButton>
       </View>
     );
   }

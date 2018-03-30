@@ -1,9 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, ScrollView } from 'react-native';
+import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import TextButton from './TextButton';
 import DeckListItem from './DeckListItem';
 import { fetchAllDecks } from '../actions';
+
+///////////////////////////DELETE
+///////////////////////////DELETE
+///////////////////////////DELETE
+///////////////////////////DELETE
+///////////////////////////DELETE
+///////////////////////////DELETE
+import { AsyncStorage } from 'react-native';
+
 
 class DecksList extends React.Component {
   constructor(props) {
@@ -12,6 +21,7 @@ class DecksList extends React.Component {
   }
 
   componentDidMount() {
+    //AsyncStorage.clear();
     this.props.fetchAllDecks();
   }
 
@@ -26,20 +36,33 @@ class DecksList extends React.Component {
     navigate('DeckNew', { decks: this.state.decks });
   }
 
+  addStartupData = () => {
+    
+  }
+
   goToDeck = (deck) => {
     const { navigate } = this.props.navigation;
     navigate('DeckStart', deck);
   }
 
   render() {
-    const displayDecksList = this.state.decks && this.state.decks.length === 0 
-    ? <Text style= { styles.msg }>Press ADD NEW DECK to get started</Text>
-    : (this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>));
+    let displayDecksList;
+
+    if (this.state.decks && this.state.decks.length === 0) {
+      displayDecksList = <View>
+        <Text style={ styles.msg }>Press ADD NEW DECK to get started.</Text>
+        <TextButton style={ styles.btnStartupData } onPress={ this.addStartupData }>ADD SOME STARTUP DATA</TextButton>
+        <Text style={ styles.msg }>(You can also start with some fake data)</Text>
+        </View>;
+    } else {
+      displayDecksList = ((this.state.decks.map((deck, i) => <DeckListItem  key={i} data={deck} goToDeck={this.goToDeck.bind(this)}/>)));
+    }
 
     return (
       <ScrollView>
         <TextButton onPress={this.addDeck}>ADD NEW DECK</TextButton>
         { displayDecksList }
+
       </ScrollView>
     );
   }
@@ -61,4 +84,7 @@ const styles = StyleSheet.create ({
     fontWeight: 'bold',
     minWidth: 0,  
   },
+  btnStartupData: {
+    marginTop: 100,
+  }
 })
