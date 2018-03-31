@@ -22,11 +22,11 @@ class DecksList extends React.Component {
     }
   }
 
-  addDeck = () => {
+/*  addDeck = () => {
     const { navigate } = this.props.navigation;
     navigate('DeckNew', { decks: this.state.decks });
   }
-
+*/
   addStartupData = () => {
     setStartupData().then(this.props.fetchAllDecks());
   }
@@ -51,9 +51,7 @@ class DecksList extends React.Component {
 
     return (
       <ScrollView>
-        <TextButton onPress={this.addDeck}>ADD NEW DECK</TextButton>
         { displayDecksList }
-
       </ScrollView>
     );
   }

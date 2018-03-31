@@ -1,12 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import TextButton from './TextButton';
+import { fetchAllDecks } from '../actions';
 import { saveDeck } from '../utils/api';
 
-export default class Deck extends React.Component {
+class Deck extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {deck: '', decks: props.navigation.state.params.decks, errorMessage: ''};
+    this.state = {deck: '', decks: [], errorMessage: ''};
+  }
+
+  componentDidMount() {
+    this.props.fetchAllDecks();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.decks !== nextProps.decks) {
+      this.setState({ decks: nextProps.decks });
+    }
   }
 
   addDeck = () => {
@@ -49,6 +61,16 @@ export default class Deck extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const decks = state.decks;
+  return { decks };
+};
+
+const mapDispatchToProps = { fetchAllDecks };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Deck);
+
 
 const styles = StyleSheet.create ({
   title: {

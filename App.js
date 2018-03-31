@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -13,26 +13,15 @@ import DeckNew          from './components/DeckNew';
 import DeckCardNew      from './components/DeckCardNew'; 
 import DeckCard         from './components/DeckCard'; 
 
-import { wine, white } from './utils/colors';
+import { wine, white, black } from './utils/colors';
 
 import { setNotification } from './utils/notifications';
 
-const MainNavigator = StackNavigator({
+const Tabs = TabNavigator({
   DecksList : {
     screen: DecksList,
     navigationOptions: {
-      title: 'Welcome to Flashcards',
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: wine,
-      }
-    }    
-  },
-  DeckStart : {
-    screen: DeckStart,
-    navigationOptions: {
-      title: 'Deck',
-      headerTintColor: white,
+      title: 'All decks',
       headerStyle: {
         backgroundColor: wine,
       }
@@ -41,7 +30,43 @@ const MainNavigator = StackNavigator({
   DeckNew : {
     screen: DeckNew,
     navigationOptions: {
-      title: 'Create a new deck',
+      title: 'New deck',
+      headerTintColor: wine,
+      headerStyle: {
+        backgroundColor: wine,
+      }
+    }    
+  },
+}, 
+{
+  tabBarOptions: {
+    indicatorStyle: {
+      backgroundColor: wine,
+      height: 43
+    },
+    activeTintColor: 'white',
+    pressColor: black,
+    style: {
+      backgroundColor: wine,
+      }
+  }
+});
+
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      title: "Udacity Flashcards",
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: wine,
+      }
+    }
+  },
+  DeckStart : {
+    screen: DeckStart,
+    navigationOptions: {
+      title: 'Deck',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: wine,
