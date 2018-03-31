@@ -22,11 +22,6 @@ class DecksList extends React.Component {
     }
   }
 
-/*  addDeck = () => {
-    const { navigate } = this.props.navigation;
-    navigate('DeckNew', { decks: this.state.decks });
-  }
-*/
   addStartupData = () => {
     setStartupData().then(this.props.fetchAllDecks());
   }
